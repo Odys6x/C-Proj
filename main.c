@@ -25,7 +25,7 @@ void saveFile();
 int main() {
     char filename[30];
     int cmd;
-    char data[256][256];
+    char data[256][256] = { {NULL} };
     int recordCount = 0;
 
     printf("Please enter a filename: \n");
