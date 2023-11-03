@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 #define MAX_RECORDS 256
@@ -47,11 +48,18 @@ int main() {
         }
         // Add more cases for other commands as needed
     }
+    for (int i = 0; i < MAX_RECORDS; i++) {
+        for (int j = 0; j < 2; j++) {
+            free(data[i][j]);
+        }
+        free(data[i]);
+    }
+    free(data);
 
     return 0;
 }
 
-void openFile(char* filename, char data[MAX_RECORDS][2][MAX_LENGTH], int* recordCount) {
+void openFile(char* filename, char (*data)[2][MAX_RECORDS], int* recordCount) {
     FILE* file;
     file = fopen(filename, "r");
 
@@ -70,7 +78,7 @@ void openFile(char* filename, char data[MAX_RECORDS][2][MAX_LENGTH], int* record
     }
 }
 
-void saveFile(const char* filename, char data[MAX_RECORDS][2][MAX_LENGTH], int recordCount) {
+void saveFile(const char* filename, char (*data)[2][MAX_RECORDS], int recordCount) {
     FILE* file = fopen(filename, "a");
 
     if (file != NULL) {
@@ -85,7 +93,8 @@ void saveFile(const char* filename, char data[MAX_RECORDS][2][MAX_LENGTH], int r
     }
 }
 
-void insertRecord(char data[MAX_RECORDS][2][MAX_LENGTH], int* recordCount, const char* key, const char* value) {
+
+void insertRecord(char(*data)[2][MAX_RECORDS], int* recordCount, const char* key, const char* value) {
     if (*recordCount >= MAX_RECORDS) {
         printf("Error: Maximum record count reached.\n");
         return;
@@ -96,6 +105,14 @@ void insertRecord(char data[MAX_RECORDS][2][MAX_LENGTH], int* recordCount, const
             printf("The record with Key=%s already exists in the database.\n", key);
             return;
         }
+    }
+
+    (*data)[*recordCount][0] = malloc(strlen(key)); // +1 for the null terminator
+    (*data)[*recordCount][1] = malloc(strlen(value));
+
+    if (data[*recordCount][0] == NULL || data[*recordCount][1] == NULL) {
+        printf("Memory allocation failed.\n");
+        return;
     }
 
     strcpy(data[*recordCount][0], key);
