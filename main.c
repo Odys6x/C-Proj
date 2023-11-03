@@ -104,6 +104,3 @@ void insertRecord(char data[MAX_RECORDS][2][MAX_LENGTH], int* recordCount, const
     (*recordCount)++;
     printf("A new record of Key=%s, Value=%s is successfully inserted.\n", key, value);
 }
-
-
-
