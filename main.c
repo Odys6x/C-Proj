@@ -19,7 +19,7 @@ void saveFile();
 void insertRecord();
 
 // Function to query a record
-
+void query();
 
 // Function to update a record's value
 
@@ -120,4 +120,20 @@ void insertRecord(char(*data)[2][MAX_RECORDS], int* recordCount, const char* key
 
     (*recordCount)++;
     printf("A new record of Key=%s, Value=%s is successfully inserted.\n", key, value);
+}
+
+void query(const char data[2][MAX_RECORDS], char keyword, int recordCount){
+    int found = 0
+    for(int x=0; x<*recordCount; x++){
+        if(strcmp(data[x][0],keyword)==0){
+            found =1;
+            printf("Query found!\n");
+            printf("Your search result of keyword: %s is %s\n",keyword, data[x][1]);
+
+            break;
+        }
+    }
+    if (found==0){
+        printf("Query not found, your search result of keyword %s is empty.\n",keyword);
+    }
 }
