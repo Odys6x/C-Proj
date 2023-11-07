@@ -126,19 +126,18 @@ void insertRecord(char(*append)[256], int* recordCount, const char* key, const c
     (*recordCount)++;
     printf("A new record of Key=%s, Value=%s is successfully inserted.\n", key, value);
 }
-
-void query(char data[2][MAX_RECORDS], char key, int recordCount) {
+void query(const char data[2][MAX_RECORDS], char keyword, int recordCount){
     int found = 0;
-        for (int x = 0; x < recordCount; x++) {
-            if (strcmp(data[x][0], key) == 0) {
-                found = 1;
-                printf("Query found!\n");
-                printf("Your search result of keyword: %s is %s\n", key, data[x][1]);
+    for(int x=0; x< recordCount; x++){
+        if(strcmp(data[x][0],keyword)==0){
+            found =1;
+            printf("Query found!\n");
+            printf("Your search result of keyword: %s is %s\n",keyword, data[x][1]);
 
-                break;
-            }
+            break;
         }
-    if (found == 0) {
-        printf("Query not found, your search result of keyword %s is empty.\n", key);
+    }
+    if (found==0){
+        printf("Query not found, your search result of keyword %s is empty.\n",keyword);
     }
 }
