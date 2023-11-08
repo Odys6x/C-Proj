@@ -17,7 +17,7 @@ int main() {
 
 
     printf("Please enter the filename with .txt : ");
-    fscanf(stdin, "%s", filename);
+    scanf("%s", filename);
     //printf("0\n");
     open(filename, &ptr, &recordcount);
     //printf("1\n");
@@ -34,6 +34,8 @@ return 0;
 void open(const char *filename, FILE** ptr, int *recordcount){
 
     char key[MAX], value[MAX];
+
+    printf("%s", filename);
 
     *ptr = fopen(filename, "r");
 
@@ -93,23 +95,23 @@ void update(int recordcount, FILE* ptr, char *data[recordcount][2]){
         printf("key : %s, value : %s\n", data[i][0], data[i][1]);
     }
 
+    // // Close for previous file
+    fclose(ptr);
+    printf("\nClosed\n");
 }
 
-void save(const char *filename, int recordcount, FILE** ptr, char *data[recordcount][2]){
-    printf("Save1\n");
-    // // Close for previous file
-    fclose(*ptr);
-
-    // Open a file for writing
-    *ptr = fopen(filename, "w");
-
-    for (int i = 0; i < recordcount; i++){
-        fprintf(*ptr, "%s %s\n", data[i][0], data[i][1]);
-    }
+void save(const char* filename, int recordcount, FILE** ptr, char *data[recordcount][2]){
+    
+    
+   *ptr = fopen(filename, "w");
 
     if (*ptr != NULL) {
-    fclose(*ptr);
-}
+        for (int i = 0; i < recordcount; i++) {
+            printf("Hello\n");
+            fprintf(*ptr, "%s %s\n", data[i][0], data[i][1]);
+        }
+        fclose(*ptr);
+    }
 
     printf("Data saved\n");
 
@@ -117,5 +119,7 @@ void save(const char *filename, int recordcount, FILE** ptr, char *data[recordco
     for (int i = 0; i < recordcount; i++) {
         free(data[i][0]);
         free(data[i][1]);
+        free(data[i]);
     }
+    
 }
