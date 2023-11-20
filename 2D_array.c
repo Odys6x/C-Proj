@@ -6,7 +6,9 @@
 
 #define MAX_RECORDS 256
 #define MAX_LENGTH 256
+void stringfilter();
 
+void printMenu();
 // Function to open an existing database file or create a new one
 void openFile();
 
@@ -29,6 +31,8 @@ void updateRecord();
 void deleteRecord();
 
 int main() {
+    #pragma GCC diagnostic ignored "-Wimplicit-function-declaration"
+    #pragma GCC diagnostic ignored "-Wfree-nonheap-object"
     char filename[30];
     int cmd;
     char *data[MAX_RECORDS][2];// Initialize data with 0 (NULL)
@@ -36,6 +40,26 @@ int main() {
     char key[256];
     char value[256];
     char choice[2];
+
+    printf("\t\t\t\t\tDeclaration\n");
+    printf("SIT\'s policy on copying does not allow the students to copy source code as well as assessment solutions\n");
+    printf("from another person or other places. It is the students\' responsibility to guarantee that their assessment\n");
+    printf("solutions are their own work. Meanwhile, the students must also ensure that their work is not accessible\n");
+    printf("by others. Where such plagiarism is detected, both of the assessments involved will receive ZERO mark.\n");
+    printf("We hereby declare that:\n");
+    printf("- We fully understand and agree to the abovementioned plagiarism policy.\n");
+    printf("- We did not copy any code from others or from other places.\n");
+    printf("- We did not share our codes with others or upload to any other places for public access.\n");
+    printf("- We agree that our project will receive Zero mark if there is any plagiarism detected.\n");
+    printf("Declared by: Group Name:\n");
+    printf("Team members:\n");
+    printf("1. WONG CHUN OWEN\n");
+    printf("2. LESLIE\n");
+    printf("3. YEO SONG CHEN\n");
+    printf("4. HENG YU XIN\n");
+    printf("5. SEE TOH MING XUAN AXEL\n");
+    printf("6. CHIN QUN ZHEN\n");
+    printf("Date: 23th November 2023\n\n");
 
     printf("Welcome to EzDB!!!\n");
     printf("------------------------\n");
@@ -46,7 +70,7 @@ int main() {
     
     while (1) {
         // printf("Enter a command (0: SHOW ALL, 1: INSERT, 2: QUERY, 3: UPDATE, 4: DELETE, 5: SAVE, 6: EXIT): \n");
-        printmenu();
+        printMenu();
         scanf("%d", &cmd);
         fflush(stdin);
         if (cmd == 0) {
@@ -55,7 +79,9 @@ int main() {
         }
         else if (cmd == 1) {
             printf("Enter a key: \n");
-            scanf("%s", key); 
+            fgets(key, 256, stdin);
+            fflush(stdin);
+            stringfilter(key);
             printf("Enter a value: \n");
             scanf("%s", value);
             insertRecord(data, &recordCount, key, value);
@@ -64,13 +90,17 @@ int main() {
         }
         else if (cmd == 2) {
             printf("Enter a key: \n");
-            scanf("%s", key);
+            fgets(key, 256, stdin);
+            fflush(stdin);
+            stringfilter(key);
             queryRecord(data,key,recordCount);
 
         }
         else if (cmd == 3) {
             printf("Enter a key: \n");
-            scanf("%s", key);
+            fgets(key, 256, stdin);
+            fflush(stdin);
+            stringfilter(key);
             printf("Enter the new value: \n");
             scanf("%s", value);
             updateRecord(data, recordCount, key, value);
@@ -80,7 +110,9 @@ int main() {
         }
         else if (cmd ==4){
             printf("Enter the key you want to delete: \n");
-            scanf("%s", key);
+            fgets(key, 256, stdin);
+            fflush(stdin);
+            stringfilter(key);
             int found= queryRecord(data,key,recordCount);
             if (found==1){
                 fflush(stdin);
@@ -105,7 +137,6 @@ int main() {
             break;
 
         }
-        // Add more cases for other commands as needed
     }
     // for (int i = 0; i < MAX_RECORDS; i++) {
     //     for (int j = 0; j < 2; j++) {
@@ -124,7 +155,7 @@ int main() {
 
     return 0;
 }
-void printmenu(){
+void printMenu(){
     const char *options[] = {
         "0: SHOW ALL",
         "1: INSERT",
@@ -185,6 +216,15 @@ void printmenu(){
 void convertToLowercase(char str[]) {
     for (int i = 0; str[i] != '\0'; i++) {
         str[i] = tolower(str[i]);
+    }
+}
+
+void stringfilter(char *text) {
+    text[strcspn(text, "\n")] = '\0';
+    for (int i = 0; i<strlen(text) ; i++) {
+        if (text[i]== ' ') {
+            text[i]= '_';
+        }
     }
 }
 
