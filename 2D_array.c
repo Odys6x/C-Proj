@@ -156,61 +156,16 @@ int main() {
     return 0;
 }
 void printMenu(){
-    const char *options[] = {
-        "0: SHOW ALL",
-        "1: INSERT",
-        "2: QUERY",
-        "3: UPDATE",
-        "4: DELETE",
-        "5: SAVE",
-        "6: EXIT"
-    };
-    int numOptions = sizeof(options) / sizeof(options[0]);
-    int longestOptionLength = 0;
-
-    // Find the length of the longest option
-    for (int i = 0; i < numOptions; i++) {
-        int length = strlen(options[i]);
-        if (length > longestOptionLength) {
-            longestOptionLength = length;
-        }
-    }
-
-    int padding = 4; // You can adjust this padding
-    int totalLength = longestOptionLength + padding * 2;
-
-    // Top border
-    printf("+");
-    for (int i = 0; i < totalLength; i++) {
-        printf("-");
-    }
-    printf("+\n");
-
-    // Options
-    for (int i = 0; i < numOptions; i++) {
-        printf("|");
-        int spaces = (totalLength - strlen(options[i])) / 2;
-        for (int j = 0; j < spaces; j++) {
-            printf(" ");
-        }
-        printf("%s", options[i]);
-        for (int j = 0; j < spaces; j++) {
-            printf(" ");
-        }
-        // Adjust for odd totalLength
-        if ((strlen(options[i]) + 2 * spaces) < totalLength) {
-            printf(" ");
-        }
-        printf("|\n");
-    }
-
-    // Bottom border
-    printf("+");
-    for (int i = 0; i < totalLength; i++) {
-        printf("-");
-    }
-    printf("+\n");
-
+    printf("+-------------------+\n");
+    printf("|    0: SHOW ALL    |\n");
+    printf("|     1: INSERT     |\n");
+    printf("|     2: QUERY      |\n");
+    printf("|     3: UPDATE     |\n");
+    printf("|     4: DELETE     |\n");
+    printf("|      5: SAVE      |\n");
+    printf("|      6: EXIT      |\n");
+    printf("+-------------------+\n");
+    printf("Enter a command:");
 }
 
 void convertToLowercase(char str[]) {
@@ -370,7 +325,6 @@ void showAllRecords(char *data[MAX_RECORDS][2], int *recordCount, char* filename
     }
 
     printf("The %s file contains \n", filename);
-    printf("There are in total %d records found:\n", *recordCount);
 
     for (int i = 0; i < (*recordCount); i += 1) {
         printf("%s %s\n", data[i][0], data[i][1]);
