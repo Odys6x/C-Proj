@@ -370,6 +370,7 @@ void showAllRecords(char *data[MAX_RECORDS][2], int *recordCount, char* filename
     }
 
     printf("The %s file contains \n", filename);
+    printf("There are in total %d records found:\n", *recordCount);
 
     for (int i = 0; i < (*recordCount); i += 1) {
         printf("%s %s\n", data[i][0], data[i][1]);
